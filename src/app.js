@@ -5,7 +5,8 @@ const hbs = require('hbs')
 
 // Systems Library
 const path = require('path')
-const weatherRoute = require('./routes/weather')
+const weatherRouter = require('./routes/weather')
+const handlebarRouter = require('./routes/handlebar')
 
 // Defines path for Express config
 const publicDir = path.join(__dirname, '../public')
@@ -18,43 +19,13 @@ app.set('views', viewsPath) // If we are not using Default 'views' name for the 
 hbs.registerPartials(paritalsPath)
 
 // Using by express
-app.use(weatherRoute)
+app.use(weatherRouter)
 app.use(express.static(publicDir))
+app.use(handlebarRouter)
 
 // Setup PORT
 const port = process.env.PORT || 3000
 app.listen(port, () => {
     console.log('Server is up and running on port', port)
-})
-
-// Routes
-app.get('', (req, res) => {
-    res.render('index', {
-        title: 'Weather App',
-        name: 'Abhishek Shukla'
-    })
-})
-
-app.get('/about', (req, res) => {
-    res.render('about', {
-        title: 'About Weather App',
-        name: 'Abhishek Shukla'
-    })
-})
-
-app.get('/help', (req, res) => {
-    res.render('help', {
-        description: 'I am here to help you',
-        title: 'Help',
-        name: 'Abhishek Shukla'
-    })
-})
-
-app.get('*', (req, res) => {
-    res.render('404', {
-        title: '404',
-        name: 'Abhishek shukla',
-        errorMessage: 'Page not found'
-    })
 })
 
